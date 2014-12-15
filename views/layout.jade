@@ -1,0 +1,52 @@
+doctype html	
+head
+	title Book Monster
+	link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+	link(rel='stylesheet', href='/stylesheets/jquery.gritter.css')
+	link(rel='stylesheet', href='/stylesheets/style.css')
+body(ng-app = 'easyElearning' , ng-controller = 'home')
+	nav.navbar.navbar-default.navbar-fixed-top(ng-controller = "navBar")
+		div.container
+			div.navbar-header 
+				a.navbar-brand(style = "color:white") Book Monster
+			div.navbar-collapse.collapse
+				ul.nav.navbar-nav.custnav
+					li 
+						a(ui-sref = "home") Home
+					li 
+						a(ui-sref = "library") Library
+					li
+						a(ui-sref = "profile({name:name})") Profile
+
+				
+
+				.navbar-right
+					form.navbar-form(ng-hide = "authenticated")
+						.form-group
+							input.form.controle(placeholder = "User Name" , ng-model = "userName")
+						.form-group
+							input.form.controle(type = "password" placeholder = "Password" , ng-model = "password")
+						button.btn.btn-primary(ng-click="signIn(userName,password)") Sign In
+
+					div(ng-show = "authenticated" class = "welcome") 
+						div.circular.loginPic
+						div.loginName
+							span Welcome, 
+							br
+							span(ng-bind = "name")
+						
+
+							
+
+				
+				
+
+
+	block content
+
+	footer.container.text-center
+		p &copy; 2014 BookMonster Corp Ltd.
+
+
+include scripts
+include ./partials/templates.html

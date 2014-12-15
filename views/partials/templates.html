@@ -1,0 +1,241 @@
+<script type = "text/ng-template" id = "highlightActions">
+
+	<div ng-transclude> 
+	</div> 
+
+	<div style = "position:relative; text-color:black; top:-80px;width:400px;right:-2000px;z-index:10;background-color:red;padding:10px;opacity:1.0" ng-show = "show"> 
+		
+	</div>
+
+</script>
+
+
+
+
+<script type = "text/ng-template" id = "annotationsIO">
+
+	<div ng-hide = "isVisible" style = "display:none"> 
+			<button ng-click = "showAnnotations()"> Show Annotations </button>
+	</div>
+	<div ng-show = "isVisible" style = "max-width:220px">
+
+		<ul class="nav nav-tabs"> 
+			<li ng-click = "switchTemplate('questions')" ng-class = "{active:template=='questions'}"> <a href = "javascript:void(0)"> <span class="glyphicon glyphicon-question-sign"></span> Questions </a></li>
+			<li ng-click = "switchTemplate('notes')" ng-class = "{active:template=='notes'}"> <a  href = "javascript:void(0)"> <span class="glyphicon glyphicon-list-alt"></span> Notes </a></li>
+		</ul>
+
+		<div ng-show = "selectedText" > 
+			<div ng-click = "resetAnnotations()" style = "cursor:pointer;margin:10px 0px">
+				<span class = "glyphicon glyphicon-chevron-left"></span> <span> Back </span>
+			</div>
+
+			<div class = "selectedText">
+				"... <span ng-bind = "selectedText" > </span>..."
+
+			</div>
+		</div>
+
+		<div ng-include = "template" > 
+		</div>
+
+	</div>
+</script>
+
+
+
+<script type = "text/ng-template" id = "questions">
+
+	<div ng-show = "selectedText">
+
+		<ul> 
+			<li ng-repeat = "question in questions"> 
+
+				<div class = "ques"> 
+					<div class="glyphicon glyphicon-chevron-up" style = "left:1px;" ng-click = "voteUp(question.sStartParentClass,$index)" ng-class = "{orange:q.votedUp}">  </div>
+					<div ng-bind = "question.nVotes">  </div>
+					<div class="glyphicon glyphicon-chevron-down" ng-click = "voteDown(question.sStartParentClass,$index)" ng-class = "{orange:q.votedDown}">  </div>
+
+				</div>
+
+				<div  class = "quesMeta"> 
+					<div ng-bind = "question.sText" class = "quesText" ng-click = "scrollToSelected(que.sStartParentClass)"> </div>
+					<div class = "quesAuthD">
+						<span ng-bind = "question.sUser" style = "float:left"> </span>
+						<span  ng-bind = "question.dDate | date:mediumDate"  style = "float:right"> </span>
+					</div>					
+				</div>
+				<div class = "iTitle"> Answers </div>
+				<ul class = "ans"> 
+						<li ng-repeat = "answer in question.aAnswers" style = "clear:both"> 
+
+							<div class = "ques"> 
+								<div class="glyphicon glyphicon-chevron-up" style = "left:1px;" ng-click = "voteUp(question.sStartParentClass,$parent.$index, $index)" ng-class = "{orange:q.votedUp}">  </div>
+								<div ng-bind = "answer.nVotes">  </div>
+								<div class="glyphicon glyphicon-chevron-down" ng-click = "voteDown(question.sStartParentClass,$parent.$index, $index)" ng-class = "{orange:q.votedDown}">  </div>
+							</div>
+
+							<div  class = "quesMeta"> 
+								<div ng-bind = "answer.sText" class = "ansText" ng-click = "scrollToSelected(que.sStartParentClass)"> </div>
+								<div class = "quesAuthD">
+									<span ng-bind = "answer.sUser" style = "float:left"> </span>
+									<span  ng-bind = "answer.dDate | date:mediumDate"  style = "float:right"> </span>
+								</div>
+							</div>
+						</li>						
+				</ul>		
+
+			</li>			
+		</ul>
+		<div ng-if = "!questions.length"  class = "inputUser">
+			<div >
+				<textarea placeholder = "Your question here" ng-model = "editOptions.newQues" class="form-control" rows="3"></textarea>
+				<div ng-click = "editOptions.add('questions')" class = "btn btn-default aBtn"> Add </div>
+			</div>
+		</div>
+		<div ng-if = " questions.length > 0"  class = "inputUser">
+			<div >
+				<textarea placeholder = "Your Answer here" ng-model = "editOptions.newAns" class="form-control" rows="3"></textarea>
+				<div ng-click = "editOptions.add('answers')" class = "btn btn-default aBtn"> Add </div>
+			</div>
+		</div>
+	</div>
+
+	<div ng-hide = "selectedText"> 
+
+		<ul ng-repeat = "que in response"  class = "quesList" ng-if = "que.aQuestions != null"> 
+			<li ng-repeat = "q in que.aQuestions" > 
+				<div class = "ques"> 
+					<div class="glyphicon glyphicon-chevron-up" style = "left:1px;" ng-click = "voteUp(que.sStartParentClass,$index)" ng-class = "{orange:q.votedUp}">  </div>
+					<div ng-bind = "q.nVotes">  </div>
+					<div class="glyphicon glyphicon-chevron-down" ng-click = "voteDown(que.sStartParentClass,$index)" ng-class = "{orange:q.votedDown}">  </div>
+				</div>
+
+				<div class = "quesMeta" > 
+						<div ng-bind = "q.sText" class = "quesText" ng-click = "scrollToSelected(que.sStartParentClass)"> </div>
+						<div class = "quesAuthD">
+							<span ng-bind = "q.sUser" style = "float:left"> </span>
+							<span  ng-bind = "q.dDate | date:mediumDate"  style = "float:right"> </span>
+						</div>
+				</div>
+
+			</li>
+			
+		</ul>
+	</div>
+
+</script>
+
+
+
+
+<script type = "text/ng-template" id = "notes">
+
+	<div ng-show = "selectedText">
+
+		<ul> 
+			<li ng-repeat = "note in notes"> 
+				<div class = "quesMeta" > 
+						<div ng-bind = "note.sText" class = "quesText" ng-click = "scrollToSelected(not.sStartParentClass)"> </div>
+						<div class = "nuesAuthD">
+							<span ng-bind = "note.sUser" style = "float:left"> </span>
+							<span  ng-bind = "note.dDate | date:mediumDate"  style = "float:right"> </span>
+						</div>
+				</div>
+			</li>
+			
+		</ul>
+
+		<div class = "inputUser">
+			<textarea placeholder = "Notes, Comments" ng-model = "editOptions.newNote" class="form-control" rows="3"></textarea>
+			<div ng-click = "editOptions.add('notes')" class = "btn btn-default aBtn"> Add </div>
+		</div>
+	</div>
+
+
+	<div ng-hide = "selectedText">
+		<ul ng-repeat = "not in response" class = "quesList" ng-if = "not.aNotes != null"> 
+			<li ng-repeat = "n in not.aNotes" > 
+				<div class = "quesMeta" > 
+						<div ng-bind = "n.sText" class = "quesText" ng-click = "scrollToSelected(not.sStartParentClass)"> </div>
+						<div class = "nuesAuthD">
+							<span ng-bind = "n.sUser" style = "float:left"> </span>
+							<span  ng-bind = "n.dDate | date:mediumDate"  style = "float:right"> </span>
+						</div>
+				</div>
+			</li>
+			
+		</ul>
+	</div>
+
+</script>
+
+<script type = "text/ng-template" id = "intro">
+	<div style = "overflow:hidden">
+		<div ng-repeat = "i in intro" >
+			<div class = "iContainer">
+				<div class = "{{i.class}}"></div>
+				<div class = "iTitle" ng-bind = "i.title"></div>
+				<div class = "iText" ng-bind = "i.text"></div>
+			</div>
+			
+		</div>
+	</div>
+
+</script>
+
+
+<script> 
+$(function() {
+                var pusher = new Pusher('f7a8b2c4dbbfc1fba7fc');
+                var channel = pusher.subscribe('test_channel');
+                channel.bind('new_message', function(data) {
+                                if(data.category == "New_Question_Posted") {
+                                                $.gritter.add({
+                                                                // (string | mandatory) the heading of the notification
+                                                                title: 'New question has been posted by Rishul Matta on The Skylight Room',
+                                                                // (string | mandatory) the text inside the notification
+                                                                text: data.message,
+                                                                // (string | optional) the image to display on the left
+                                                                image: '/images/Questions_Asked.png',
+                                                                // (bool | optional) if you want it to fade out on its own or just sit there
+                                                                sticky: false,
+                                                                // (int | optional) the time you want it to be alive for before fading out
+                                                                time: ''
+                                                });
+                                }
+                                
+                                if(data.category == "Question_Answered") {
+                                                $.gritter.add({
+                                                                // (string | mandatory) the heading of the notification
+                                                                title: 'One of your question has answered by Ashwin Vijayendra',
+                                                                // (string | mandatory) the text inside the notification
+                                                                text: data.message,
+                                                                // (string | optional) the image to display on the left
+                                                                image: '/images/Question_Answered.png',
+                                                                // (bool | optional) if you want it to fade out on its own or just sit there
+                                                                sticky: false,
+                                                                // (int | optional) the time you want it to be alive for before fading out
+                                                                time: ''
+                                                });
+                                }
+                                
+                                if(data.category == "Answer_Marked_Useful") {
+                                                $.gritter.add({
+                                                                // (string | mandatory) the heading of the notification
+                                                                title: 'Rishul has marked your answer as useful for The Skylight Room ',
+                                                                // (string | mandatory) the text inside the notification
+                                                                text: data.message,
+                                                                // (string | optional) the image to display on the left
+                                                                image: '/images/ThumbsUp.png',
+                                                                // (bool | optional) if you want it to fade out on its own or just sit there
+                                                                sticky: false,
+                                                                // (int | optional) the time you want it to be alive for before fading out
+                                                                time: ''
+                                                });
+                                }
+                
+                });
+  var notifier = new PusherNotifier(channel);
+});
+
+</script>

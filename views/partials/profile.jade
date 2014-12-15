@@ -1,0 +1,23 @@
+div.container(style = "overflow:hidden")
+	div(style = "overflow:hidden")
+		div.profileLeft
+			div
+				span.field Name :
+				span.value(ng-bind = "name")
+			div
+				span.field Points :
+				span.value 656
+			div
+				span.field Member Since :
+				span.value 2 years 4 months
+			div
+				span.field Total Ques Asked :
+				span.value 342	
+			div
+				span.field Total Answers :
+				span.value 256			
+		div.profileRight
+			iframe(src = "/analytics/admin.html" seamless = "seamless" scrolling = "no" frameborder = "0" height = "400px" marginheight = "0px")
+	div(style = "clear:both")
+	iframe(src = "/analytics/userProfile.html" seamless = "seamless" scrolling = "no" frameborder = "0" height = "400px" marginheight = "0px")
+	

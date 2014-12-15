@@ -1,0 +1,510 @@
+body {
+  
+  font: 14px "Segoe UI", Helvetica, Arial, sans-serif;
+  padding-top:50px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#sidebar {
+	display:none;
+}
+
+#page-container {
+
+	background-image: none !important;
+	background-color: transparent !important;
+	left:0px !important;
+	top:20px !important;
+	right:auto !important;
+	overflow-y:scroll !important;
+	overflow-x:hidden !important;
+}
+
+.highlight {
+
+	border: 3px solid yellow;
+	
+	cursor:pointer;
+}
+
+.selected {
+
+	background-color:yellow;
+}
+
+.pf {
+
+	overflow:visible !important;
+}
+
+.pc {
+
+	overflow:visible !important;
+}
+
+.navbar-form .form-group {
+
+	margin-left:10px;
+
+}
+
+.navbar-form .form-group input {
+
+	padding:5px;
+	
+}
+
+.navbar-form button {
+
+	margin-left:10px;
+}
+
+.bookFrame {
+
+	position:relative;
+	min-height:700px;
+	
+}
+
+.annotation {
+	position:absolute;
+	right:-30px;
+	top:20px;
+	
+}
+
+.bookshelf {
+	height:800px;
+	width:900px;
+	background-image:url("../images/bookshelf.jpg");
+	background-repeat: no-repeat;
+	margin:auto;
+	position:relative;
+}
+
+.intro {
+	height:350px;
+	width:600px;
+	background-image:url("../images/minion_intro.gif");
+	background-repeat: no-repeat;
+	float:left;
+}
+
+.bookMonster{
+
+	background-image:url("../images/logo.png");
+	width: 80px;
+	height:80px;
+}
+
+
+.introText {
+	width:440px;
+	height:350px;
+	float: right;
+	text-align: center;
+	padding-right:20px;
+}
+
+.featureHeading {
+	font-family :"Sentinel SSm A","Sentinel SSm B","Georgia";
+	font-size:38px;
+}
+
+.featureHighlight {
+
+	font-size:18px;
+	font-weight:bold;
+	margin:20px 0px;
+}
+
+
+.bookRow {
+
+	position:absolute;
+	top:60px;
+	left:40px;
+}
+
+.bookRow > a{
+	padding-top:20px;
+}
+
+
+.book{
+	
+	background-repeat: no-repeat;
+	height:180px;
+	display:inline-block;
+	width:250px;
+	vertical-align: middle;
+	text-align: left;
+	padding-left:4px;
+	color:white;
+	position:relative;
+}
+
+.bookName {
+
+	width:50px;
+	word-wrap: break-word;
+	position:relative;
+	font-size:22px;
+	top:30%;
+	word-wrap: break-word;
+	left:-30px;
+	font-family:"Papyrus";
+}
+
+.b1 {
+	background-image:url("../images/book1.png");
+}
+
+.b2 {
+	background-image:url("../images/book2.jpg");
+}
+
+.b3 {
+	background-image:url("../images/book3.gif");
+}
+
+
+.navbar-default {
+
+	background-color:#26333F;
+}
+
+.navbar-default .navbar-nav > li > a{
+	color:#babfc5;
+}
+
+ul {
+
+	list-style-type: none;
+	padding-left: 5px;
+
+}
+
+.ques {
+
+	padding-left:0px;
+	margin-right:10px;
+	float:left;
+	width:20px;
+	text-align:center;
+}
+
+.quesMeta {
+	float:left;
+	width:180px;
+	margin-bottom:20px;
+}
+
+.quesText {
+	font-size:18px;
+	cursor:pointer;
+	margin-bottom:5px;
+}
+
+.quesAuthD{
+	font-size:12px;
+	color:#738F9B;
+}
+
+.quesList {
+	margin-bottom:10px;
+	border-bottom:1px solid #E49135;
+	overflow:hidden;
+	padding:5px 2px;
+}
+
+.glyphicon-chevron-up , .glyphicon-chevron-down {
+
+	opacity:0.4;
+
+}
+
+.glyphicon-chevron-up:hover, .glyphicon-chevron-down:hover {
+
+	opacity:1;
+	cursor:pointer;
+
+}
+
+.orange {
+	color:#BA6222;
+	opacity:1;
+}
+
+.selectedText {
+
+	font-weight:bold;
+	color:#738F9B;
+	padding:3px;
+	margin-bottom:10px;
+}
+
+.ans {
+	clear:both;
+	padding-top:10px;
+	padding-left:0px;
+}
+
+
+.ansText {
+
+	font-size: 15px;
+}
+
+.container {
+
+}
+
+.iContainer {
+	width:31%;
+	float:left;
+	padding:1%;
+	margin: 0px 1%;
+	background-color:#DCDDDF;
+	box-sizing:border-box;
+	min-height:380px;
+}
+
+.iImg1 {
+	width:100%;
+	height:200px;
+	background-image: url("../images/1.png");
+	background-repeat: no-repeat;
+}
+
+.iImg2 {
+	width:100%;
+	height:200px;
+	background-image: url("../images/2.jpg");
+	background-repeat: no-repeat;
+}
+
+.iImg3 {
+	width:100%;
+	height:200px;
+	background-image: url("../images/3.jpg");
+	background-repeat: no-repeat;
+
+}
+
+.iTitle {
+	font-size:20px;
+	color:#E49135;
+
+}
+
+.iText {
+
+	font-size:15px;
+	margin-top: 10px;
+	
+}
+
+
+.custnav a:hover, .custnav  a:focus, .custnav a:active {
+	color:white !important;
+}
+
+.hrD {
+
+	border-bottom:1px solid #E49135;
+	margin-top:25px;
+	margin-bottom:25px;
+	width:100%;
+	clear:both;
+}
+
+.introImg {
+	background-image: url("../images/introImg.png");
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	width:100%;
+	height:400px;
+	position:relative;
+	padding:50px 0px;
+}
+
+.introOuterText{
+
+	margin:auto;
+	overflow:hidden;
+	width:40%;
+
+}
+
+.heading{
+
+	font-size:38px;
+	color:white;
+	font-family:"Sentinel SSm A","Sentinel SSm B","Georgia";
+	text-align:center;
+	font-weight:bold;
+}
+
+
+.subheading {
+	font-size:24px;
+	color:white;
+	
+}
+
+.subOuterText{
+	margin:auto;
+	overflow:hidden;
+	width:70%;
+	text-align: center;
+	margin-top:100px;
+}
+
+body {
+	background-color:#f5f6f8;
+}
+
+.circular {
+	width: 33px;
+	height: 35px;
+	border-radius: 150px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	background: url("../images/teacher.jpg") no-repeat;
+	background-position: 50% 50%;
+	}
+
+.welcome {
+	color:white;
+	padding-top:7px;
+}
+
+.loginName {
+	float:right;
+	margin-right:10px;
+}
+
+.loginPic {
+	float:right;
+	width:40px;
+	margin-right:10px;
+}
+
+
+
+.sbt {
+
+	margin-top:10px;
+	float:right;
+}
+
+.bwr {
+	padding:12px 6px;
+	width:100%;
+	height:50px;
+}
+
+.heading2 {
+	color:#BA6222;
+	font-size:24px;
+	margin:15px 0px 5px 0px;
+
+}
+
+.aBtn {
+	margin-top:10px;
+}
+
+.inputUser {
+
+	margin-top:30px;
+}
+
+footer {
+	padding: 0px 15px;
+}
+
+footer p {
+	border-top:1px solid #BA6222;
+}
+
+.profileLeft {
+
+	float:left;
+	width:40%;
+	height:450px;
+
+}
+
+
+.profileRight {
+
+	float:right;
+	width:60%;
+	height:450px;
+	
+}
+
+iframe {
+	width:100%;
+	height:500px;
+}
+
+.field {
+	font-size:16px;
+	font-weight:bold;
+}
+
+.profileLeft > div {
+
+	margin-top :15px;
+}
+
+.value {
+
+	font-size:18px;
+	margin-left:5px;
+}
+
+footer {
+	height:20px;
+	background-color:#26333F;
+	color:white;
+}
+
+
+
+
+/*animations*/
+
+.animate-enter, 
+.animate-leave
+{ 
+    -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+} 
+
+.animate-enter.animate-enter-active, 
+.animate-leave {
+    opacity: 1;
+    top: 0;
+    height: 30px;
+}
+
+.animate-leave.animate-leave-active,
+.animate-enter {
+    opacity: 0;
+    top: -50px;
+    height: 0px;
+}
+
+

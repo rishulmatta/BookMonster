@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+  width: 100%;
+}
+
+.axis text {
+  font: 13px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.bar {
+  fill: steelblue;
+  fill-opacity: .9;
+}
+
+.x.axis path {
+  display: none;
+}
+
+#firstElement {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  width: 450px;
+  text-align: center;
+  color: #666;
+  z-index: -1;
+}
+
+#secondElement {
+  position: absolute;
+  top: 20px;
+  left: 600px;
+  width: 450px;
+  text-align: center;
+  color: #666;
+  z-index: -1;
+}
+
+#firstSort {
+  top: 10px;
+  left: 300px;
+}
+
+#secondSort {
+  top: 10px;
+  left: 800px;
+}
+
+label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+</style>
+<label id="firstSort"><input id="sortFirstValues" type="checkbox"> Sort values</label>
+<label id="secondSort"><input id="sortSecondValues" type="checkbox"> Sort values</label>
+<div id="firstElement"></div>
+<div id="secondElement"></div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script>
+
+
+var firstmargin = {top: 70, right: 20, bottom: 30, left: 20},
+    width = 500,
+    height = 250;
+
+var formatPercent = d3.format("00");
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1, 1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(formatPercent);
+
+var tipFirst = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+	return "<strong>Questions Posted:</strong> <span style='color:red'>" + d.Questions_Posted + "</span>";
+  })
+	
+var svgFirst = d3.select("#firstElement").append("svg")
+    .attr("width", width + firstmargin.left + firstmargin.right)
+    .attr("height", height + firstmargin.top + firstmargin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + firstmargin.left + "," + firstmargin.top + ")");
+
+svgFirst.call(tipFirst);
+	
+function type(d) {
+	d.Questions_Posted = +d.Questions_Posted;
+  return d;
+}
+
+
+d3.tsv("data_questionsPosted.tsv",type, function(error, data) {
+  data.forEach(function(d) {
+	d.Questions_Posted = +d.Questions_Posted;
+  });
+
+  x.domain(data.map(function(d) { return d.Day; }));
+  y.domain([0, d3.max(data, function(d) { return d.Questions_Posted; })]);
+
+  svgFirst.append("g")
+	  .attr("class", "x axis")
+	  .attr("transform", "translate(0," + height + ")")
+	  .call(xAxis);
+
+  svgFirst.append("g")
+	  .attr("class", "y axis")
+	  .call(yAxis)
+	.append("text")
+	  .attr("transform", "rotate(-90)")
+	  .attr("y", 6)
+	  .attr("dy", ".71em")
+	  .style("text-anchor", "end")
+	  .text("Questions Posted");
+
+  svgFirst.selectAll(".bar")
+	  .data(data)
+	.enter().append("rect")
+	  .attr("class", "bar")
+	  .attr("x", function(d) { return x(d.Day); })
+	  .attr("width", x.rangeBand())
+	  .attr("y", function(d) { return y(d.Questions_Posted); })
+	  .attr("height", function(d) { return height - y(d.Questions_Posted); })
+	  .on('mouseover', tipFirst.show)
+	  .on('mouseout', tipFirst.hide)
+
+
+  d3.select("#sortFirstValues").on("change", changeFirst);
+
+  var sortTimeout = setTimeout(function() {
+	d3.select("#sortFirstValues").property("checked", true).each(changeFirst);
+  }, 15000);
+
+  function changeFirst() {
+	clearTimeout(sortTimeout);
+
+	// Copy-on-write since tweens are evaluated after a delay.
+	var x0 = x.domain(data.sort(this.checked
+		? function(a, b) { return b.Questions_Posted - a.Questions_Posted; }
+		: function(a, b) { return d3.ascending(a.Day, b.Day); })
+		.map(function(d) { return d.Day; }))
+		.copy();
+
+	var transition = svgFirst.transition().duration(750),
+		delay = function(d, i) { return i * 50; };
+
+	transition.selectAll(".bar")
+		.delay(delay)
+		.attr("x", function(d) { return x0(d.Day); });
+
+	transition.select(".x.axis")
+		.call(xAxis)
+	  .selectAll("g")
+		.delay(delay);
+  }
+});
+
+//Second Graph
+
+var secondmargin = {top: 70, right: 20, bottom: 30, left: 20},
+    width = 500,
+    height = 250;
+
+var formatPercent = d3.format("0");
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1, 1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(formatPercent);
+
+var tipSecond = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+	return "<strong>Questions Answered:</strong> <span style='color:red'>" + d.Questions_Answered + "</span>";
+  })
+	
+var svgSecond = d3.select("#secondElement").append("svg")
+    .attr("width", width + secondmargin.left + secondmargin.right)
+    .attr("height", height + secondmargin.top + secondmargin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + secondmargin.left + "," + secondmargin.top + ")");
+
+svgSecond.call(tipSecond);
+	
+function type(d) {
+	d.Questions_Answered = +d.Questions_Answered;
+  return d;
+}
+
+
+d3.tsv("data_questionsAnswered.tsv",type, function(error, data) {
+  data.forEach(function(d) {
+	d.Questions_Answered = +d.Questions_Answered;
+  });
+
+  x.domain(data.map(function(d) { return d.Day; }));
+  y.domain([0, d3.max(data, function(d) { return d.Questions_Answered; })]);
+
+  svgSecond.append("g")
+	  .attr("class", "x axis")
+	  .attr("transform", "translate(0," + height + ")")
+	  .call(xAxis);
+
+  svgSecond.append("g")
+	  .attr("class", "y axis")
+	  .call(yAxis)
+	.append("text")
+	  .attr("transform", "rotate(-90)")
+	  .attr("y", 6)
+	  .attr("dy", ".71em")
+	  .style("text-anchor", "end")
+	  .text("Questions Answered");
+
+  svgSecond.selectAll(".bar")
+	  .data(data)
+	.enter().append("rect")
+	  .attr("class", "bar")
+	  .attr("x", function(d) { return x(d.Day); })
+	  .attr("width", x.rangeBand())
+	  .attr("y", function(d) { return y(d.Questions_Answered); })
+	  .attr("height", function(d) { return height - y(d.Questions_Answered); })
+	  .on('mouseover', tipSecond.show)
+	  .on('mouseout', tipSecond.hide)
+
+
+  d3.select("#sortSecondValues").on("change", changeSecond);
+
+  var sortTimeout = setTimeout(function() {
+	d3.select("#sortSecondValues").property("checked", true).each(changeSecond);
+  }, 15000);
+
+  function changeSecond() {
+	clearTimeout(sortTimeout);
+
+	// Copy-on-write since tweens are evaluated after a delay.
+	var x0 = x.domain(data.sort(this.checked
+		? function(a, b) { return b.Questions_Answered - a.Questions_Answered; }
+		: function(a, b) { return d3.ascending(a.Day, b.Day); })
+		.map(function(d) { return d.Day; }))
+		.copy();
+
+	var transition = svgSecond.transition().duration(750),
+		delay = function(d, i) { return i * 50; };
+
+	transition.selectAll(".bar")
+		.delay(delay)
+		.attr("x", function(d) { return x0(d.Day); });
+
+	transition.select(".x.axis")
+		.call(xAxis)
+	  .selectAll("g")
+		.delay(delay);
+  }
+});
+</script>

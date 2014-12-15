@@ -1,0 +1,14 @@
+div.container
+	div(ng-if = "userRole == 'teacher'")
+		div.heading2 Upload files to the library
+		form(action="/upload", method="post", enctype="multipart/form-data" )
+			div(style = "overflow:hidden")
+				input.btn.btn-default.bwr(type = "file" name = "files" )
+				input.btn.btn-default.sbt(type = "submit" name = "submitbutton" value = "Upload" ng-click = "submitForm()")
+	div.hrD
+	div.bookshelf
+		span.bookRow
+			a( ui-sref = "book({bookName:book})" ng-repeat = "book in bookList" ng-animate="'animate'")
+				span.book(  ng-class = "{'b1':$index % 2 == 0 ,'b2':$index % 2 == 1}" )
+					span.bookName(ng-bind = "book | spaces")
+			span.book.bookMonster(style = "top:-40px" title = "Read fast the monster is eating away your books!")
