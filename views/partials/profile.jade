@@ -1,23 +1,38 @@
-div.container(style = "overflow:hidden")
-	div(style = "overflow:hidden")
-		div.profileLeft
-			div
-				span.field Name :
-				span.value(ng-bind = "name")
-			div
-				span.field Points :
-				span.value 656
-			div
-				span.field Member Since :
-				span.value 2 years 4 months
-			div
-				span.field Total Ques Asked :
-				span.value 342	
-			div
-				span.field Total Answers :
-				span.value 256			
-		div.profileRight
-			iframe(src = "/analytics/admin.html" seamless = "seamless" scrolling = "no" frameborder = "0" height = "400px" marginheight = "0px")
+div.container
+	div.profileLeft
+		div.iTitle(style = "font-size:22px;margin-top:15px") Snapshot
+		div.hrD(style = "margin-top:10px")
+		div
+			span.field Name :
+			span.value(ng-bind = "name")
+		div
+			span.field Points :
+			span.value 656
+		div
+			span.field Member Since :
+			span.value 2 years 4 months
+		div
+			span.field Total Ques Asked :
+			span.value 342	
+		div
+			span.field Total Answers :
+			span.value 256	
+		div
+			span.field Country :
+			span.value India
+		div
+			span.field Age :
+			span.value 28 yrs
+		div
+			span.field E-Mail :
+			span.value i.am.legend@WTH.com
+	div.profileRight
+		div.iTitle(style = "font-size:22px;margin-top:15px") Peer Chart
+		div.hrD(style = "margin-top:10px")
+		div(style = "width:600px;margin:auto;height:300px")
+			iframe(src = "/analytics/admin.html" seamless = "seamless" scrolling = "no" frameborder = "0" height = "260px" marginheight = "0px")
 	div(style = "clear:both")
+	div.iTitle(style = "font-size:22px;margin-top:15px") My Activity
+	div.hrD(style = "margin-top:10px")
 	iframe(src = "/analytics/userProfile.html" seamless = "seamless" scrolling = "no" frameborder = "0" height = "400px" marginheight = "0px")
 	

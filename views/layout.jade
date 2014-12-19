@@ -29,7 +29,7 @@ body(ng-app = 'easyElearning' , ng-controller = 'home')
 						button.btn.btn-primary(ng-click="signIn(userName,password)") Sign In
 
 					div(ng-show = "authenticated" class = "welcome") 
-						div.circular.loginPic
+						div.circular.loginPic(ng-click = "logout()")
 						div.loginName
 							span Welcome, 
 							br

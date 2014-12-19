@@ -65,7 +65,7 @@ a {
 .bookFrame {
 
 	position:relative;
-	min-height:700px;
+	min-height:900px;
 	
 }
 
@@ -332,6 +332,7 @@ ul {
 	padding:50px 0px;
 }
 
+
 .introOuterText{
 
 	margin:auto;
@@ -374,8 +375,27 @@ body {
 	border-radius: 150px;
 	-webkit-border-radius: 150px;
 	-moz-border-radius: 150px;
-	background: url("../images/teacher.jpg") no-repeat;
+	
 	background-position: 50% 50%;
+	}
+
+	.teacher {
+		background: url("../images/teacher.jpg") no-repeat;	
+	}
+
+
+.rishul {
+		background: url("../images/rishul.jpg") no-repeat;	
+	}
+
+
+.poornesh {
+		background: url("../images/poornesh.jpg") no-repeat;	
+	}
+
+
+.ashwin {
+		background: url("../images/ashwin.jpg") no-repeat;	
 	}
 
 .welcome {
@@ -422,6 +442,7 @@ body {
 .inputUser {
 
 	margin-top:30px;
+	clear:both;
 }
 
 footer {
@@ -436,7 +457,7 @@ footer p {
 
 	float:left;
 	width:40%;
-	height:450px;
+	
 
 }
 
@@ -444,7 +465,7 @@ footer p {
 .profileRight {
 
 	float:right;
-	width:60%;
+	width:40%;
 	height:450px;
 	
 }
@@ -481,30 +502,34 @@ footer {
 
 /*animations*/
 
-.animate-enter, 
-.animate-leave
+.animate.ng-enter, 
+.animate.ng-leave
 { 
-    -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    position: relative;
-    display: block;
+	-webkit-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	-moz-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	-ms-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	-o-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	position: relative;
+	display: block;
+	overflow: hidden;
+	text-overflow: clip;
+	white-space:nowrap;
 } 
 
-.animate-enter.animate-enter-active, 
-.animate-leave {
-    opacity: 1;
-    top: 0;
-    height: 30px;
+.animate.ng-leave.animate.ng-leave-active,
+.animate.ng-enter {
+	opacity: 0;
+	width: 0px;
+	height: 0px;
 }
 
-.animate-leave.animate-leave-active,
-.animate-enter {
-    opacity: 0;
-    top: -50px;
-    height: 0px;
+.animate.ng-enter.ng-enter-active, 
+.animate.ng-leave {
+	opacity: 1;
+	width: 150px;
+	height: 30px;
 }
+	
 
 

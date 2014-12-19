@@ -1,4 +1,4 @@
-easy.controller('home',function ($scope) {
+easy.controller('home',function ($scope, $rootScope) {
 
 	$scope.name = "rishul";
 	$scope.bookName = "OData";
@@ -25,36 +25,58 @@ easy.controller('home',function ($scope) {
 
 
 
-easy.controller('profileCtrl',function ($scope , $stateParams) {
+easy.controller('profileCtrl',function ($scope , $stateParams,$rootScope) {
 
 	$scope.name = "Ashwin";
-	$scope.bookName = "OData";
-	$scope.intro = [
-		{
-			text:"sample text 1",
-			class:"iImg1",
-			title:"Discuss"
-		},
-		{
-			text:"sample text 2",
-			class:"iImg2",
-			title:"Highlight"
-		},
-		{
-			text:"sample text 3",
-			class:"iImg3",
-			title:"Organize"
-		}
-
-	];
+	
 });
 
 
 
-easy.controller('navBar',function ($scope,$http,authenticate) {
+easy.controller('navBar',function ($scope,$http,authenticate, $timeout , $rootScope) {
 
 	
-	$scope.bookName = "OData";
+	var x = document.cookie;
+	if (x) {
+		$scope.authenticated = true;
+		var arr = x.split (";");
+		$scope.name = arr[0].substring(arr[0].indexOf("=")+1);
+		$scope.role = arr[1].substring(arr[1].indexOf("=")+1);
+		authenticate.currentUser = {
+			userName:$scope.name,
+			role:$scope.role
+		};
+		addPic();
+		
+	}
+	else {
+		$scope.authenticated = false;
+		authenticate.currentUser =null;
+	}
+	
+	function addPic () {
+		$timeout(function () {
+
+			var pic = document.getElementsByClassName('circular')[0];
+			pic.classList.add($scope.name);
+		} , 100);
+
+	}
+
+	$scope.logout = function () {
+		 document.cookie = "username=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+		 document.cookie = "role=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+		$scope.authenticated = false;
+
+		$timeout(function () {
+
+			var pic = document.getElementsByClassName('circular')[0];
+			pic.classList.remove($scope.name);
+
+		} , 100);
+		
+	}
+
 	$scope.signIn = function (username , password) {
 
 		console.log(username + password);
@@ -64,7 +86,10 @@ easy.controller('navBar',function ($scope,$http,authenticate) {
 				authenticate.currentUser = res.data.user;
 				$scope.authenticated = true;
 				$scope.name = username;
+				document.cookie="username="+username+";";
+				document.cookie = "role="+authenticate.currentUser.role+";";
 				console.log('Success');
+				addPic();
 			}
 			else
 				console.log('Failure');	
@@ -73,7 +98,7 @@ easy.controller('navBar',function ($scope,$http,authenticate) {
 	}
 });
 
-easy.controller('bookCtrl',function ($scope , $http , $stateParams , $compile , authenticate) {
+easy.controller('bookCtrl',function ($scope , $http , $stateParams , $compile , authenticate , $rootScope) {
 	var presentSelection , newlyAdded = [] , classHighlighted;
 	$scope.editOptions = {};
 	$scope.bookName = "OData";
@@ -100,12 +125,21 @@ easy.controller('bookCtrl',function ($scope , $http , $stateParams , $compile , 
 		current.classList.add('selected');
 	}
 
-
+	var previousScrollDist;
 	$scope.scrollToSelected = function (className) {
 		//called when clicked on a bordered text in document or the question in the list
-		if (className.substring(0,className.indexOf("highlight")-1) != classHighlighted) {
+	//	if (className.substring(0,className.indexOf("highlight")-1) != classHighlighted) {
+		var presentScroll = $('#page-container').scrollTop();
+		var  scrollDist = $("."+className.replace(/\s/g,".")).offset().top;
+
+			if (className != classHighlighted || presentScroll != scrollDist) {			
+				
+					scrollDist += presentScroll;
+					scrollDist -=100;
+
+
 			$('#page-container').animate({
-	  		  scrollTop: ( $("."+className.replace(/\s/g,".")).offset().top -100)
+	  		  scrollTop: ( scrollDist)
 			}, 1000);
 		}
 
@@ -127,7 +161,7 @@ easy.controller('bookCtrl',function ($scope , $http , $stateParams , $compile , 
 
 		var obj = fetchClassMeta (classHighlighted);
 		user = authenticate.currentUser;
-		if (!user || !user.userName) {
+		if (!user ) {
 			alert("please log in");
 			return;
 		}
@@ -220,6 +254,9 @@ easy.controller('bookCtrl',function ($scope , $http , $stateParams , $compile , 
 						console.log(" insert fail");
 				});
 		}
+
+		$scope.editOptions.newQues = null;
+		$scope.editOptions.newAns = null;
 		
 	
 		
@@ -418,25 +455,45 @@ easy.controller('bookCtrl',function ($scope , $http , $stateParams , $compile , 
 		}
 	}
 	
-	$scope.voteUp = function (className,qIndex) {
+	$scope.voteUp = function (className,qIndex, aIndex) {
+		if (!className) {
+			className = classHighlighted;
+		}
 		var index = getQueIndex(className,qIndex);
 		if ($scope.response[index].aQuestions[qIndex].votedUp) {
 		 	return;
 		}
-		$scope.response[index].aQuestions[qIndex].nVotes = parseInt($scope.response[index].aQuestions[qIndex].nVotes +1);
-	
-		$scope.response[index].aQuestions[qIndex].votedUp = true;
-		$scope.response[index].aQuestions[qIndex].votedDown = false;
+		if(typeof aIndex == "undefined") {
+			$scope.response[index].aQuestions[qIndex].nVotes = parseInt($scope.response[index].aQuestions[qIndex].nVotes +1);
+		
+			$scope.response[index].aQuestions[qIndex].votedUp = true;
+			$scope.response[index].aQuestions[qIndex].votedDown = false;
+		}
+		else {
+			$scope.response[index].aQuestions[qIndex].aAnswers[aIndex].nVotes = parseInt($scope.response[index].aQuestions[qIndex].aAnswers[aIndex].nVotes +1);
+			$scope.response[index].aQuestions[qIndex].aAnswers[aIndex].votedUp = true;			
+			$scope.response[index].aQuestions[qIndex].aAnswers[aIndex].votedDown = false;	
+		}
 	}		
 
-	$scope.voteDown = function (className,qIndex) {
+	$scope.voteDown = function (className,qIndex,aIndex) {
+		if (!className) {
+			className = classHighlighted;
+		}
 		var index = getQueIndex(className,qIndex);
 		if ($scope.response[index].aQuestions[qIndex].votedDown) {
 		 	return;
 		}
-		$scope.response[index].aQuestions[qIndex].nVotes = parseInt($scope.response[index].aQuestions[qIndex].nVotes - 1);
-		$scope.response[index].aQuestions[qIndex].votedDown = true;
-		$scope.response[index].aQuestions[qIndex].votedUp = false;
+		if(typeof aIndex == "undefined") {
+			$scope.response[index].aQuestions[qIndex].nVotes = parseInt($scope.response[index].aQuestions[qIndex].nVotes - 1);
+			$scope.response[index].aQuestions[qIndex].votedDown = true;
+			$scope.response[index].aQuestions[qIndex].votedUp = false;
+		}
+		else {
+			$scope.response[index].aQuestions[qIndex].aAnswers[aIndex].nVotes = parseInt($scope.response[index].aQuestions[qIndex].aAnswers[aIndex].nVotes -1);
+			$scope.response[index].aQuestions[qIndex].aAnswers[aIndex].votedDown = true;
+			$scope.response[index].aQuestions[qIndex].aAnswers[aIndex].votedUp = false;
+		}
 	}
 
 
@@ -445,7 +502,7 @@ easy.controller('bookCtrl',function ($scope , $http , $stateParams , $compile , 
 });
 
 
-easy.controller('libraryCtrl',function ($scope,$http,authenticate) {
+easy.controller('libraryCtrl',function ($scope,$http,authenticate,$rootScope , $timeout) {
 
 	$scope.name = "rishul";
 	$scope.bookName = "OData";
@@ -455,11 +512,15 @@ easy.controller('libraryCtrl',function ($scope,$http,authenticate) {
     if (typeof newVal !== 'undefined') {
         $scope.userRole = newVal.role;
     }
-});
+
+
+
+	});
 	
 
 	$scope.submitForm = function () {
 
+		$timeout(function () {fetchDocuments();},500)
 		fetchDocuments();
 	}
 

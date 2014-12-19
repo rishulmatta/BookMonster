@@ -2,61 +2,55 @@
   "name": "Station Details",
 	"children": [
 		{
-		  "name": "Adith Shenoy",
+		  "name": "Adith",
 		  "NoOfQuestionsPosted": 865,
 		  "NoOfQuestionsAnswered": 510,
 		  "percentageOfUsefulAnswers": 23.56
 		},
 		{
-		  "name": "Ashwin Vijayendra",
+		  "name": "Ashwin",
 		  "NoOfQuestionsPosted": 23,
 		  "NoOfQuestionsAnswered": 34,
 		  "percentageOfUsefulAnswers": 58.96
 		},
 		{
-		  "name": "Rishul Matta",
-		  "NoOfQuestionsPosted": 34,
-		  "NoOfQuestionsAnswered": 234,
-		  "percentageOfUsefulAnswers": 45
-		},
-		{
-		  "name": "Sudhansu Mohanty",
+		  "name": "Sudhansu",
 		  "NoOfQuestionsPosted": 232,
 		  "NoOfQuestionsAnswered": 454,
 		  "percentageOfUsefulAnswers": 49.86
 		},
 		{
-		  "name": "Akhila Rao",
+		  "name": "Akhila",
 		  "NoOfQuestionsPosted": 865,
 		  "NoOfQuestionsAnswered": 510,
 		  "percentageOfUsefulAnswers": 87.24
 		},
 		{
-		  "name": "Ashudeep Reshi",
+		  "name": "Ashudeep",
 		  "NoOfQuestionsPosted": 865,
 		  "NoOfQuestionsAnswered": 510,
-		  "percentageOfUsefulAnswers": 12.56
+		  "percentageOfUsefulAnswers": 45.56
 		},
 		{
-		  "name": "Pradeep Panda",
+		  "name": "Pradeep",
 		  "NoOfQuestionsPosted": 865,
 		  "NoOfQuestionsAnswered": 510,
 		  "percentageOfUsefulAnswers": 65.98
 		},
 		{
-		  "name": "Shiva Prasad nayak",
+		  "name": "Shiva",
 		  "NoOfQuestionsPosted": 865,
 		  "NoOfQuestionsAnswered": 510,
 		  "percentageOfUsefulAnswers": 92.45
 		},
 		{
-		  "name": "Indeevar Reddy aduri",
+		  "name": "Indeevar",
 		  "NoOfQuestionsPosted": 865,
 		  "NoOfQuestionsAnswered": 510,
 		  "percentageOfUsefulAnswers": 19.47
 		},
 		{
-		  "name": "Poornesh B Sharma",
+		  "name": "Poornesh",
 		  "NoOfQuestionsPosted": 865,
 		  "NoOfQuestionsAnswered": 510,
 		  "percentageOfUsefulAnswers": 99.99

@@ -114,7 +114,7 @@ module.exports = function (config) {
 						sText:"Open Specifications are intended for use in conjunction with publicly available standard",						
 						nPageNo:1,
 						aQuestions:[{ sText:"Do you know what are repercussions of this?" , dDate:new Date().toISOString() , sUser:"teacher",nVotes:"-1" ,aAnswers:[{sText:"I think..." , dDate:new Date().toISOString() ,sUser:"student1" , nVotes:"-1"}] }],
-						aNotes:[{sText:"Gosh in last exam thsi line fetched me 5 marks lol :)" , dDate: new Date().toISOString() ,sUser:"teacher"}]
+						aNotes:[{sText:"Gosh in last exam this line fetched me 5 marks lol :)" , dDate: new Date().toISOString() ,sUser:"teacher"}]
 					})
 				}
 			});

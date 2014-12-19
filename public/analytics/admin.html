@@ -30,8 +30,8 @@ function testRadio() {
                 window.location.reload();
 }
 
-var margin = {top: 250, right: 300, bottom: 250, left: 300},
-    radius = Math.min(margin.top, margin.right, margin.bottom, margin.left) - 10;
+var margin = {top: 150, right: 200, bottom: 150, left: 200},
+    radius = 150;
 var x = d3.scale.linear()
     .range([0, 2 * Math.PI]);
                 
@@ -61,7 +61,7 @@ var arc = d3.svg.arc()
     .startAngle(function(d) { return d.x; })
     .endAngle(function(d) { return d.x + d.dx - .01 / (d.depth + .5); })
     .innerRadius(function(d) { return radius / 3 * d.depth; })
-    .outerRadius(function(d) { return radius / 3 * (d.depth + 1) - 1; });
+    .outerRadius(function(d) { return radius / 2 * (d.depth + 1) - 1; });
 
 //Tooltip description
 var tooltip = d3.select("body")
@@ -137,7 +137,7 @@ d3.json("Teacher_Details.json", function(error, root) {
                   .value(function(d) { return d.sum; });    
                   
   var center = svg.append("circle")
-      .attr("r", radius / 3)
+      .attr("r", radius / 2)
       .on("click", zoomOut);
 
   center.append("title")
@@ -164,7 +164,7 @@ d3.json("Teacher_Details.json", function(error, root) {
                 .attr("x", function(d) { return radius / 3 * d.depth; })       
                 .attr("dx", "6") // margin
                 .attr("dy", ".35em") // vertical-align        
-                .text(function(d,i) {return d.name.substring(0,11)})
+                .text(function(d,i) {return d.name.substring(0,10)})
 
   function zoomIn(p) {
     if (p.depth > 1) p = p.parent;
@@ -249,7 +249,7 @@ d3.json("Teacher_Details.json", function(error, root) {
                                 .attr("dx", "6") // margin
       .attr("dy", ".35em") // vertical-align
       .filter(filter_min_arc_size_text)          
-      .text(function(d,i) {return d.name.substring(0,11)})
+      .text(function(d,i) {return d.name.substring(0,10)})
                                 .transition().delay(250).style("opacity", 1)
                 
                                  
@@ -283,6 +283,6 @@ function updateArc(d) {
 }
 
 
-d3.select(self.frameElement).style("height", margin.top + margin.bottom + "px");
+d3.select(self.frameElement).style("height", "500px");
 
 </script>

@@ -69,9 +69,9 @@
 						<li ng-repeat = "answer in question.aAnswers" style = "clear:both"> 
 
 							<div class = "ques"> 
-								<div class="glyphicon glyphicon-chevron-up" style = "left:1px;" ng-click = "voteUp(question.sStartParentClass,$parent.$index, $index)" ng-class = "{orange:q.votedUp}">  </div>
+								<div class="glyphicon glyphicon-chevron-up" style = "left:1px;" ng-click = "voteUp('',$parent.$index, $index)" ng-class = "{orange:answer.votedUp}">  </div>
 								<div ng-bind = "answer.nVotes">  </div>
-								<div class="glyphicon glyphicon-chevron-down" ng-click = "voteDown(question.sStartParentClass,$parent.$index, $index)" ng-class = "{orange:q.votedDown}">  </div>
+								<div class="glyphicon glyphicon-chevron-down" ng-click = "voteDown('',$parent.$index, $index)" ng-class = "{orange:answer.votedDown}">  </div>
 							</div>
 
 							<div  class = "quesMeta"> 
@@ -192,7 +192,7 @@ $(function() {
                                 if(data.category == "New_Question_Posted") {
                                                 $.gritter.add({
                                                                 // (string | mandatory) the heading of the notification
-                                                                title: 'New question has been posted by Rishul Matta on The Skylight Room',
+                                                                title: data.title,
                                                                 // (string | mandatory) the text inside the notification
                                                                 text: data.message,
                                                                 // (string | optional) the image to display on the left
@@ -207,7 +207,7 @@ $(function() {
                                 if(data.category == "Question_Answered") {
                                                 $.gritter.add({
                                                                 // (string | mandatory) the heading of the notification
-                                                                title: 'One of your question has answered by Ashwin Vijayendra',
+                                                                title: data.title,
                                                                 // (string | mandatory) the text inside the notification
                                                                 text: data.message,
                                                                 // (string | optional) the image to display on the left
@@ -222,7 +222,7 @@ $(function() {
                                 if(data.category == "Answer_Marked_Useful") {
                                                 $.gritter.add({
                                                                 // (string | mandatory) the heading of the notification
-                                                                title: 'Rishul has marked your answer as useful for The Skylight Room ',
+                                                                title: data.title,
                                                                 // (string | mandatory) the text inside the notification
                                                                 text: data.message,
                                                                 // (string | optional) the image to display on the left
